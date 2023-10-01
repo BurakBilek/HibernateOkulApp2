@@ -3,6 +3,7 @@ package com.burak;
 
 import com.burak.repository.entity.*;
 import com.burak.util.HibernateUtility;
+import com.burak.util.MyFactoryRepository;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -11,6 +12,31 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Main {
+
+    public static void main(String[] args) {
+        Session session ;
+        Transaction transaction ;
+        session= HibernateUtility.getSessionFactory().openSession();
+        transaction=session.beginTransaction();
+        MyFactoryRepository<Ogrenci,Long> ogrenciRepository= new MyFactoryRepository<>(new Ogrenci());
+        ogrenciRepository.findAll();
+        Long id=1L;
+        System.out.println(ogrenciRepository.findById(id));
+        System.out.println("Diger Asama");
+
+        MyFactoryRepository<Ogretmen,Long>ogretmenList= new MyFactoryRepository<>(new Ogretmen());
+        ogretmenList.findAll();
+        System.out.println(ogretmenList.findById(id));
+
+        System.out.println("Diger Asama");
+
+        MyFactoryRepository<Sinif,Long>sinifList= new MyFactoryRepository<>(new Sinif());
+        sinifList.findAll();
+        System.out.println(sinifList.findById(id));
+    }
+}
+
+    /*
     public static void main(String[] args) {
         Session session = HibernateUtility.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
@@ -59,7 +85,7 @@ public class Main {
 
     }
 }
-
+*/
 /*
     public static  void main(String[] args) {
         Session session ;
