@@ -11,7 +11,7 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
 
-public class OgretmenRepository extends MyFactoryRepository<Ogretmen> {
+public class OgretmenRepository extends MyFactoryRepository<Ogretmen,Long> {
 
     public OgretmenRepository() {
         super(new Ogretmen());
@@ -37,7 +37,6 @@ public class OgretmenRepository extends MyFactoryRepository<Ogretmen> {
         Ogretmen ogretmen = entityManager.createQuery(criteria).getSingleResult();
         return Optional.ofNullable(ogretmen);
     }
-
 
 
 }

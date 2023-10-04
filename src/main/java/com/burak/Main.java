@@ -2,8 +2,11 @@ package com.burak;
 
 
 import com.burak.controller.OgrenciController;
+import com.burak.controller.OgretmenController;
 import com.burak.repository.entity.*;
 import com.burak.repository.hql.OgrenciDao;
+import com.burak.service.OgrenciService;
+import com.burak.util.DataGenerator;
 import com.burak.util.HibernateUtility;
 import com.burak.util.MyFactoryRepository;
 import org.hibernate.Session;
@@ -71,16 +74,32 @@ public class Main {
 //        System.out.println("######################################");
 //        ogretmenList.forEach(x -> System.out.println(x));
 
-        Ogrenci ogrenci = Ogrenci.builder()
-                .kisiselBilgiler(KisiselBilgiler.builder()
-                        .isim("Ali")
-                        .soyisim("Dogan")
-                        .tcKimlik("1234789")
-                        .build())
-                .dogumTarihi(LocalDate.of(1995,3,19))
+        Session session ;
+        Transaction transaction ;
+        session= HibernateUtility.getSessionFactory().openSession();
+        transaction=session.beginTransaction();
+
+        OgrenciService ogrenciService;
+
+        KisiselBilgiler kisiselBilgiler= KisiselBilgiler.builder()
+                .tcKimlik("465465465")
+                .isim("Abuzer")
+                .soyisim("Komurcu")
                 .build();
-        OgrenciController ogrenciController = new OgrenciController();
-        ogrenciController.save(ogrenci);
+
+        Ogretmen ogretmen1=Ogretmen.builder()
+                .kisiselBilgiler(kisiselBilgiler)
+                .brans(EBrans.KIMYA)
+                .iseBaslama(LocalDate.of(2002,4,12))
+                .build();
+
+        OgretmenController ogretmenController = new OgretmenController();
+
+        // ogretmenController.save(ogretmen1);
+
+        DataGenerator dataGenerator = new DataGenerator();
+//        dataGenerator.ogrenciOlustur();
+        dataGenerator.ogretmenOlustur();
 
 //        session.save(ogrenci);
 //        transaction.commit();
